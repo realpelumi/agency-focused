@@ -97,7 +97,7 @@ export default function Contact() {
     setErrorMessage('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      const response = await axios.post('https://agency-focused-backend.onrender.com/api/contact', formData);
       
       if (response.data.ok) {
         setSubmitStatus('success');
