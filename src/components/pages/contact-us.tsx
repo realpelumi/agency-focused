@@ -107,7 +107,14 @@ export default function Contact() {
       setSubmitStatus('error');
       if (error.response?.data?.errors) {
         const validationErrors = error.response.data.errors;
-        setErrorMessage('Please fix the validation errors and try again.');
+        if (validationErrors.fieldErrors) {
+          const errorMessages = Object.entries(validationErrors.fieldErrors)
+            .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
+            .join('; ');
+          setErrorMessage(errorMessages);
+        } else {
+          setErrorMessage('Validation failed. Please check your input.');
+        }
       } else {
         setErrorMessage('Failed to send message. Please try again later.');
       }
