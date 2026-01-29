@@ -9,7 +9,7 @@ const projects = [
     title: 'E-Commerce Platform',
     category: 'Web Development',
     description: 'Full-stack e-commerce solution with real-time inventory management.',
-    image: 'https://images.unsplash.com/photo-1460925895917-adf4e9534f90?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
     tags: ['Next.js', 'React', 'MySQL'],
   },
   {
@@ -33,7 +33,7 @@ const projects = [
     title: 'SaaS Dashboard',
     category: 'Web Development',
     description: 'Analytics dashboard with real-time data visualization.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop',
     tags: ['React', 'TypeScript', 'Charts'],
   },
   {
@@ -41,7 +41,7 @@ const projects = [
     title: 'Marketing Website',
     category: 'Web Design',
     description: 'High-converting marketing site with interactive elements.',
-    image: 'https://images.unsplash.com/photo-1467994763999-4b2a0d4e3544?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop',
     tags: ['Design', 'Animation', 'SEO'],
   },
   {
@@ -117,9 +117,7 @@ export default function Portfolio() {
               <img
                 src={projects[0].image || "/placeholder.svg"}
                 alt={projects[0].title}
-                width={100}
-                height={100}
-                className="object-cover"
+                className="w-full h-full object-cover"
               />
             </motion.div>
 
@@ -184,9 +182,7 @@ export default function Portfolio() {
                 <img
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
-                  width={100}
-                  height={100}
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300" />
               </motion.div>

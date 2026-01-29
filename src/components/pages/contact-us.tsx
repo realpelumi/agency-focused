@@ -7,6 +7,7 @@ import React from "react"
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Send } from 'lucide-react';
 import { useState } from 'react';
+import axios from 'axios';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -81,21 +82,38 @@ export default function Contact() {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      
+      if (response.data.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }
+    } catch (error: any) {
+      setSubmitStatus('error');
+      if (error.response?.data?.errors) {
+        const validationErrors = error.response.data.errors;
+        setErrorMessage('Please fix the validation errors and try again.');
+      } else {
+        setErrorMessage('Failed to send message. Please try again later.');
+      }
+    } finally {
       setIsSubmitting(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      alert('Thank you! We will get back to you soon.');
-    }, 1500);
+    }
   };
 
   return (
@@ -269,6 +287,27 @@ export default function Contact() {
                   placeholder="Tell us more about your project..."
                 />
               </div>
+
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-lg bg-green-50 border border-green-200 text-green-800"
+                >
+                  Thank you! Your message has been sent successfully. We'll get back to you soon.
+                </motion.div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-800"
+                >
+                  {errorMessage}
+                </motion.div>
+              )}
 
               {/* Submit Button */}
               <motion.button
