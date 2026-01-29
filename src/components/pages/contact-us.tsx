@@ -109,7 +109,7 @@ export default function Contact() {
         const validationErrors = error.response.data.errors;
         if (validationErrors.fieldErrors) {
           const errorMessages = Object.entries(validationErrors.fieldErrors)
-            .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
+            .map(([field, errors]) => `${errors.join(', ')}`)
             .join('; ');
           setErrorMessage(errorMessages);
         } else {
